@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-function UserForm() {
+function UserForm(props) {
     // const [form, setForm] = useState('')
     const [enteredUser, setEnteredUser] = useState('')
     const [enteredEmail, setEnteredEmail] = useState('')
@@ -13,29 +13,27 @@ function UserForm() {
         setEnteredEmail(event.target.value)
     }
 
-    const logIT = (event) => {
-        // // setForm(event.target.value)
+    const sumbitHandler = (event) => {
+
         event.preventDefault();
-        // // console.log(event.target.querySelector('input').value);
-        // console.log("entered event", event.target.querySelector('input').value);
-        // //const oldInput = event.target.querySelector('input').value
-        // let newInput = event.target.querySelector('input').value
-        // //console.log(oldInput)
-        // console.log(newInput = '')
         const profile = {
             user: enteredUser,
             email: enteredEmail,
+            id: Math.random().toString(),
+
 
         }
-        console.log(profile)
+        props.onSaveUserData(profile)
+        setEnteredUser('');
+        setEnteredEmail('');
     }
 
     return (
-        <form onSubmit={logIT}>
+        <form onSubmit={sumbitHandler}>
             <label>UserName</label>
-            <input type="text" placeholder='User Name' onChange={userChangeHandler}></input>
+            <input type="text" placeholder='User Name' value={enteredUser} onChange={userChangeHandler}></input>
             <label>Email</label>
-            <input type="email" placeholder='Email' onChange={emailChangeHandler}></input>
+            <input type="email" placeholder='Email' value={enteredEmail} onChange={emailChangeHandler}></input>
             <button type='submit'>Insert User</button>
         </form>
     )
